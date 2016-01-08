@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,14 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/admin", name="admin_index")
      * @Template()
      */
     public function indexAction(Request $request)
     {
-
-        return [
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-        ];
+        return ['name' => '1'];
     }
 }
