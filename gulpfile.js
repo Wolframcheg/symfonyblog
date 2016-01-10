@@ -10,23 +10,32 @@ gulp.task('clean', function () {
         .pipe(clean());
 });
 
-//gulp.task('admin-sty;e', function () {
-//    return gulp.src([
-//            'bower_components/AdminLTE/dist/css/AdminLTE.min.css',
-//            'bower_components/AdminLTE/dist/css/_all-skins.min.css',
-//            'bower_components/font-awesome/css/font-awesome.min.css'
-//        ])
-//        .pipe(gulp.dest('web/admin/'));
-//});
-
 gulp.task('admin-less', function() {
     return gulp.src(['web-src/admin/less/*.less'])
         .pipe(less({compress: true}))
         .pipe(gulp.dest('web/admin/css/'));
 });
 
+gulp.task('admin-js', function() {
+    return gulp.src([
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/AdminLTE/dist/js/app.js'
+        ])
+        .pipe(concatJs('app.js'))
+        .pipe(minifyJs())
+        .pipe(gulp.dest('web/admin/js/'));
+});
+
+gulp.task('admin-fonts', function () {
+    return gulp.src(['bower_components/font-awesome/fonts/*',
+                     'bower_components/bootstrap/fonts/*'])
+        .pipe(gulp.dest('web/admin/fonts/'))
+});
+
+
 gulp.task('default', ['clean'], function () {
-    var tasks = ['admin-less'];
+    var tasks = ['admin-less','admin-js', 'admin-fonts'];
     tasks.forEach(function (val) {
         gulp.start(val);
     });
