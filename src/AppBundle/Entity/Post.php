@@ -18,6 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     fields={"pagetitle"},
  *     message="This value must be unique!"
  * )
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Post
 {
@@ -67,6 +68,11 @@ class Post
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     /**
      * @var string
@@ -213,6 +219,29 @@ class Post
     }
 
     /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return Post
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
+    /**
      * Set slug
      *
      * @param string $slug
@@ -343,15 +372,15 @@ class Post
         $this->temp = $this->getAbsolutePath();
     }
 
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-        if (isset($this->temp)) {
-            unlink($this->temp);
-        }
-    }
+//    /**
+//     * @ORM\PostRemove()
+//     */
+//    public function removeUpload()
+//    {
+//        if (isset($this->temp)) {
+//            unlink($this->temp);
+//        }
+//    }
 
     public function getAbsolutePath()
     {

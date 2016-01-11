@@ -2,12 +2,15 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use AppBundle\Entity\Tag;
 
 class PostType extends AbstractType
 {
@@ -25,6 +28,12 @@ class PostType extends AbstractType
                 'data_class' => null,
                 'mapped' => true
             ])
+            ->add('tags', EntityType::class, array(
+                'class'   => 'AppBundle\Entity\Tag',
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true
+    ));
         ;
     }
     

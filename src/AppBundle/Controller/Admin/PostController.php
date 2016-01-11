@@ -131,10 +131,4 @@ class PostController extends Controller
             ->getForm();
     }
 
-    public function prePersist($object)
-    {
-        // We get the uploadable manager!
-        $uploadableManager = $this->container->get('stof_doctrine_extensions.uploadable.manager');
-        $uploadableManager->markEntityToUpload($object, $object->getImage());
-    }
 }
