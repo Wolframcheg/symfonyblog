@@ -3,8 +3,6 @@ namespace Tests\AppBundle\Form\Type;
 
 use AppBundle\Entity\Tag;
 use AppBundle\Form\TagType;
-use AppBundle\Form\Tagype;
-//use AppBundle\Model\TestObject;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class TagTypeTest extends TypeTestCase
@@ -12,15 +10,14 @@ class TagTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
         $formData = array(
-            'name' => 'test'
+            'name' => 'test',
         );
 
-        $type = new TagType();
-        $form = $this->factory->create($type);
+        $form = $this->factory->create(TagType::class);
 
-        $object = Tag::fromArray($formData);
+        $object = new Tag();
+        $object->setName('test');
 
-        // submit the data to the form directly
         $form->submit($formData);
 
         $this->assertTrue($form->isSynchronized());

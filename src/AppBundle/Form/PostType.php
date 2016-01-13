@@ -20,6 +20,8 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $entityManager = $options['em'];
+
         $builder
             ->add('pagetitle',TextType::class)
             ->add('content',TextareaType::class)
@@ -46,7 +48,8 @@ class PostType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Post'
+            'data_class' => 'AppBundle\Entity\Post',
+            'em' => null
         ]);
     }
 }
