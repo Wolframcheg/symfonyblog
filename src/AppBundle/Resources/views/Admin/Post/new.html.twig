@@ -2,7 +2,7 @@
 
 {% block content %}
     <section class="content-header">
-        <h1>New post</h1>
+        <h1>{% block title %}New Post{% endblock %}</h1>
         <ol class="breadcrumb">
             <li><a href="{{ url('admin_index') }}"><i class="fa fa-dashboard"></i> Home admin</a></li>
             <li><a href="{{ url('admin_post_index') }}">Post list</a></li>

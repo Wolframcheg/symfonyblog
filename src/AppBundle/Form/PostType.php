@@ -32,7 +32,10 @@ class PostType extends AbstractType
                 'class'   => 'AppBundle\Entity\Tag',
                 'choice_label' => 'name',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'label_attr' => [
+                    'class' => 'checkbox-inline'
+                ]
     ));
         ;
     }

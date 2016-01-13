@@ -1,0 +1,4 @@
+AppBundle\Entity\Tag:
+    tag{0..99}:
+        __construct: false
+        name (unique): <word()>

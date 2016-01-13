@@ -9,7 +9,9 @@
 >
     <php>
         <ini name="error_reporting" value="-1" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
+
 
     <testsuites>
         <testsuite name="Project Test Suite">

@@ -3,7 +3,7 @@
 {% block content %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Post list</h1>
+        <h1>{% block title %}Post List{% endblock %}</h1>
         <ol class="breadcrumb">
             <li><a href="{{ url('admin_index') }}"><i class="fa fa-dashboard"></i> Home admin</a></li>
             <li class="active">Post list</li>
