@@ -54,7 +54,7 @@ section:last-child {
 	padding-bottom: 0px;
 }
 /*- Reset bootstrap -*/
-@media (min-width: 1200px)
+@media (min-width: 1200px){
 .container {
 	width: 1260px;
 }
@@ -383,4 +383,5 @@ footer .footer-socials a:hover {
 }
 footer .footer-bottom {
 	padding: 10px 0 40px;
+}
 }

@@ -1,0 +1,5 @@
+{% for tag in tags %}
+    {% if  tag.countPosts>0%}
+        {text: "{{ tag.0.name }}", weight: {{ tag.countPosts }}, link:'{{ path('posts_by_tag', { 'tag': tag.0.name }) }}'},
+    {% endif %}
+{% endfor %}

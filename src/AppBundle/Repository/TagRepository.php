@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class TagRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTagsWithCount()
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t, count(p.id) as countPosts')
+            ->leftJoin('t.posts', 'p')
+            //->where('count(p.id) > 0')
+            ->groupBy('t')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

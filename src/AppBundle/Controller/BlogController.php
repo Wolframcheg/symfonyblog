@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class BlogController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -15,9 +15,11 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('AppBundle:Post')->findAll();
 
         return [
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'posts' => $entities,
         ];
     }
 }

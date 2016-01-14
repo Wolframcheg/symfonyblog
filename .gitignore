@@ -15,3 +15,6 @@ npm-debug.log
 /bower_components
 /web/admin/*
 /web/uploads/*
+/web/css/*
+/web/js/*
+/web/fonts/*

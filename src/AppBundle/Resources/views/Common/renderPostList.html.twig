@@ -1,0 +1,17 @@
+{% if posts|length > 0 %}
+    {% for post in posts %}
+        <article class="blog-post">
+            <div class="blog-post-image">
+                <a href="post.html"><img src="{{ asset(post.path)  }}" alt=""></a>
+            </div>
+            <div class="blog-post-body">
+                <h2><a href="post.html">{{ post.pagetitle  }}</a></h2>
+                <div class="post-meta"><i class="fa fa-clock-o"> {{ post.createdAt|date }}</i></div>
+                <p>{{ post.content  }}</p>
+                <div class="read-more"><a href="#">Continue Reading</a></div>
+            </div>
+        </article>
+    {% endfor %}
+{% else %}
+<h1> No result</h1>
+{% endif %}
