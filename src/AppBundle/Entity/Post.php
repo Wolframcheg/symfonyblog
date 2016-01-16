@@ -412,6 +412,8 @@ class Post
     }
 
     public function getPath(){
+        if(strpos($this->path, "http://") === false && !empty($this->path))
+            return  $this->getUploadDir() . '/' . $this->id . '/' . $this->path;
         return $this->path;
     }
 

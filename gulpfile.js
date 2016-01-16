@@ -44,7 +44,8 @@ gulp.task('front-js', function() {
             'bower_components/jquery/dist/jquery.js',
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'web-src/front/js/mooz.scripts.min.js',
-            'bower_components/jQCloud/jqcloud/jqcloud-1.0.3.js'
+            'bower_components/jQCloud/jqcloud/jqcloud-1.0.3.js',
+            'bower_components/infiniteajaxscroll/index.js'
         ])
         .pipe(concatJs('app.js'))
         .pipe(minifyJs())

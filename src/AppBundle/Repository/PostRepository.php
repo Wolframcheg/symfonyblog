@@ -10,4 +10,34 @@ namespace AppBundle\Repository;
  */
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('post')
+                ->getQuery();
+    }
+
+    public function findByTagQuery($name)
+    {
+        return $this->createQueryBuilder('post')
+            ->select('post, tag')
+            ->leftJoin('post.tags', 'tag')
+            ->andWhere('tag.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ;
+    }
+
+    public function findByQueryQuery($query)
+    {
+        return $this->createQueryBuilder('post')
+            ->select('post, tag')
+            ->leftJoin('post.tags', 'tag')
+            ->orWhere('tag.name = :q')
+            ->orWhere("post.pagetitle LIKE '%$query%'")
+            ->orWhere("post.content LIKE '%$query%'")
+            ->setParameter('q', $query)
+            ->getQuery()
+            ;
+    }
 }

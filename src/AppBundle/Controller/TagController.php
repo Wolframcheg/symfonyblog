@@ -15,9 +15,23 @@ class TagController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        var_dump('1');exit();
-        return 1;//$this->render('', array('name' => $name));
+        $tag = $request->get('tag');
+
+        $limit = 5;
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository('AppBundle:Post')->findByTagQuery($tag);
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            $limit/*limit per page*/
+        );
+
+        return ['posts' => $pagination];
     }
 }

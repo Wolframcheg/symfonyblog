@@ -1,29 +1,29 @@
 <?php
 
-namespace AppBundle\Tests\Controller\Admin;
+namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TagControllerTest extends WebTestCase
+class BlogControllerTest extends WebTestCase
 {
     public function testIndex()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/admin/tag');
+        $crawler = $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(
-            1,
+            0,
             $crawler->filter('h1')->count()
         );
     }
 
 
-    public function testNew()
+    public function testSearch()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/admin/tag/new');
 
+        $crawler = $client->request('GET', "/search?q=sometext");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(
             1,
@@ -31,18 +31,16 @@ class TagControllerTest extends WebTestCase
         );
     }
 
-    public function testEdit()
+    public function testShow()
     {
-
         $client = static::createClient();
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
-        $id = $em
-            ->getRepository('AppBundle:Tag')
-            ->findOneBy([])->getId();
+        $slug = $em
+            ->getRepository('AppBundle:Post')
+            ->findOneBy([])->getSlug();
 
-        $crawler = $client->request('GET', "/admin/tag/{$id}/edit");
-
+        $crawler = $client->request('GET', "/post/{$slug}");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(
             1,

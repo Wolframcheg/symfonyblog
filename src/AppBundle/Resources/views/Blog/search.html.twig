@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-     <div class="col-md-8 post-container">
-        {% include 'AppBundle:Common:renderPostList.html.twig' %}
-    </div>
+<div class="col-md-8 post-container">
+    <h1>{% block title %}Posts by query "{{ app.request.get('q') }}"{% endblock %}</h1>
+    {% include 'AppBundle:Common:renderPostList.html.twig' %}
+</div>
 {% endblock %}
 
 {% block javascripts %}
@@ -19,3 +20,6 @@
         //  ias.extension(new IASNoneLeftExtension({text: 'There are no more pages left to load.'}));
     </script>
 {% endblock %}
+
+
+
