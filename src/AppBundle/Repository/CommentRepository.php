@@ -10,5 +10,16 @@ namespace AppBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getLastComments($limit)
+    {
+        return $this->createQueryBuilder('comment')
+            ->select('comment, post')
+            ->leftJoin('comment.post', 'post')
+            ->setMaxResults($limit)
+            ->orderBy('comment.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 }

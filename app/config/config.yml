@@ -94,3 +94,8 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [810, 400], mode: inbound }
+
+        post_image_small:
+             quality: 100
+             filters:
+                thumbnail: { size: [90, 60], mode: inbound }

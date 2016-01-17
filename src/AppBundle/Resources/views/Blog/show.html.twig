@@ -14,11 +14,11 @@
             {% endif %}
             <div class="blog-post-body">
                 <h1>{% block title %}{{ post.0.pagetitle }}{% endblock %}</h1>
-                <div class="post-meta"><i class="fa fa-clock-o"></i>{{ post.0.createdAt|date }}</div>
+               div class="post-meta"><i class="fa fa-clock-o"></i>{{ post.0.createdAt|date }}</div>#}
                 <div class="blog-post-text">
                     {{ post.0.content }}
                 </div>
-                <div><i class="fa fa-star"></i> {{ post.avg_rating }}</div>
+                <div><i class="fa fa-star"></i> {{ post.avg_rating|round(1, 'floor') }}</div>
                 <div>
                 {% for tag in post.0.tags %}
                     <a class="label label-primary" href="{{ path('posts_by_tag', { 'tag': tag.name }) }}">{{ tag.name }}</a>

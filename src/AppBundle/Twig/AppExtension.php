@@ -30,6 +30,18 @@ class AppExtension extends \Twig_Extension
                     'is_safe' => array('html')
                 ]
             ),
+            new \Twig_SimpleFunction('lastComments',
+                array($this, 'getLastComments'),
+                array(
+                    'needs_environment' => true,
+                    'is_safe' => array('html'))
+            ),
+            new \Twig_SimpleFunction('popularPosts',
+                array($this, 'getPopularPosts'),
+                array(
+                    'needs_environment' => true,
+                    'is_safe' => array('html'))
+            ),
         ];
     }
 
@@ -48,6 +60,34 @@ class AppExtension extends \Twig_Extension
         );
     }
 
+    public function getLastComments(\Twig_Environment $twig)
+    {
+        $em = $this->doctrine->getManager();
+        $comments = $em->getRepository("AppBundle:Comment")
+            ->getLastComments(5);
+
+        return $twig->render(
+            'AppBundle:Common:lastComments.html.twig',
+            array(
+                'comments' => $comments,
+            )
+        );
+    }
+
+    public function getPopularPosts(\Twig_Environment $twig)
+    {
+        $em = $this->doctrine->getManager();
+        $populars= $em->getRepository("AppBundle:Post")
+            ->getPopularPosts(5);
+
+        //var_dump($populars);exit();
+        return $twig->render(
+            'AppBundle:Common:popularPosts.html.twig',
+            array(
+                'posts' => $populars,
+            )
+        );
+    }
 
     public function getName()
     {
