@@ -2,9 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Comment;
+use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -63,12 +66,35 @@ class BlogController extends Controller
      * @Route("/post/{slug}", name="show_post", requirements={"slug" = "[a-zA-Z1-9\-_\/]+"},)
      * @Template()
      */
-    public function showAction($slug)
+    public function showAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository('AppBundle:Post')->findBy(['slug' => $slug]);
+        $post = $em->getRepository('AppBundle:Post')->findBySlug($slug);
 
-        return ['post' => $post];
+        $comment = new Comment();
+        $comment->setPost($post[0]);
+
+        $form = $this->createForm(CommentType::class, $comment, [
+            'method' => Request::METHOD_POST,
+        ]);
+
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Submit Comment',
+                'attr' => array('class' => "btn btn-primary")
+            ));
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->persist($comment);
+                $em->flush();
+                return $this->redirectToRoute('show_post', ['slug' => $slug], 301);
+            }
+        }
+
+
+        return ['post' => $post, 'formComment' => $form->createView()];
     }
 
 

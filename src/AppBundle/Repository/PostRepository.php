@@ -40,4 +40,20 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ;
     }
+
+    /**
+     * @param $slug
+     * @return Post
+     */
+    public function findBySlug($slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, avg(c.rating) as avg_rating')
+            ->leftJoin('p.tags', 't')
+            ->Join('p.comments', 'c')
+            ->andWhere('p.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

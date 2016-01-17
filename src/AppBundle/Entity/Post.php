@@ -102,6 +102,11 @@ class Post
      */
     private $file;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
+     */
+    private $comments;
+
     private $temp;
 
     /**
@@ -110,6 +115,7 @@ class Post
     public function __construct()
     {
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -300,6 +306,33 @@ class Post
     }
 
     /**
+     * @param Comment $comment
+     * @return Post
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+        return $this;
+    }
+    /**
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
      * Sets file.
      *
      * @param UploadedFile $file
@@ -416,5 +449,7 @@ class Post
             return  $this->getUploadDir() . '/' . $this->id . '/' . $this->path;
         return $this->path;
     }
+
+
 
 }
