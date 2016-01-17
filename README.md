@@ -5,10 +5,11 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/Wolframcheg/symfonyblog/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Wolframcheg/symfonyblog/badges/coverage.png?b=master)
 
 
-For installgo to root project and run
+For install go to root project and run
 ```
 sh reload.sh
 ```
 
 [Demo](http://sblog.kuzserv.ru/)
+
 [Demo admin zone](http://sblog.kuzserv.ru/admin)
