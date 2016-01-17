@@ -1,0 +1,6 @@
+AppBundle\Entity\Comment:
+    comment{0..299}:
+        __construct: false
+        content (unique): <text($maxNbChars = 200)>
+        post: @post*
+        rating: <numberBetween($min = 1, $max = 5)>

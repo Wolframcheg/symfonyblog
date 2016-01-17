@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{% block title %}Posts by tag "{{ app.request.get('tag') }}"{% endblock %}</h1>
+    <div class="col-md-8 post-container">
+        {% include 'AppBundle:Common:renderPostList.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var ias = $.ias({
+            container: ".post-container",
+            item: ".blog-post",
+            pagination: ".pagination",
+            next: ".next a"
+        });
+        ias.extension(new IASSpinnerExtension());
+        //  ias.extension(new IASNoneLeftExtension({text: 'There are no more pages left to load.'}));
+    </script>
+{% endblock %}
+

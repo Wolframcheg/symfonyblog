@@ -1,0 +1,7 @@
+AppBundle\Entity\Post:
+    post{0..10}:
+        __construct: false
+        pagetitle (unique): <sentence($nbWords = 4, $variableNbWords = true)>
+        content : <text($maxNbChars = 400)>
+        path : <imageUrl(810, 400)>
+        tags : 10x @tag*

@@ -1,0 +1,27 @@
+{% if posts|length > 0 %}
+    {% for post in posts %}
+        <article class="blog-post">
+            {% if post.path %}
+                {% if post.path starts with 'http' %}
+                    {% set urlImage = post.path %}
+                {% else %}
+                    {% set urlImage = post.path | imagine_filter('post_image') %}
+                {% endif %}
+                <div class="blog-post-image">
+                    <a href="{{ path('show_post', { 'slug': post.slug }) }}"><img src="{{ urlImage }}" alt=""></a>
+                </div>
+            {% endif %}
+
+            <div class="blog-post-body">
+                <h2><a href="{{ path('show_post', { 'slug': post.slug }) }}">{{ post.pagetitle  }}</a></h2>
+                <div class="post-meta"><i class="fa fa-clock-o"></i>{{ post.createdAt|date }}</div>
+                <p>{{ post.content  }}</p>
+                <div class="read-more"><a href="{{ path('show_post', { 'slug': post.slug }) }}">Continue Reading</a></div>
+            </div>
+        </article>
+    {% endfor %}
+    {{ knp_pagination_render(posts) }}
+{% else %}
+<h2> No result</h2>
+{% endif %}
+

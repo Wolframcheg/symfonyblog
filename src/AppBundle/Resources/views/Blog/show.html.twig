@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="col-md-8">
+        <article class="blog-post">
+            {% if post.0.path %}
+                {% if post.0.path starts with 'http' %}
+                    {% set urlImage = post.0.path %}
+                {% else %}
+                    {% set urlImage = post.0.path | imagine_filter('post_image') %}
+                {% endif %}
+                <div class="blog-post-image">
+                    <img src="{{ urlImage }}" alt="">
+                </div>
+            {% endif %}
+            <div class="blog-post-body">
+                <h1>{% block title %}{{ post.0.pagetitle }}{% endblock %}</h1>
+                <div class="post-meta"><i class="fa fa-clock-o"></i>{{ post.0.createdAt|date }}</div>
+                <div class="blog-post-text">
+                    {{ post.0.content }}
+                </div>
+                <div><i class="fa fa-star"></i> {{ post.avg_rating }}</div>
+                <div>
+                {% for tag in post.0.tags %}
+                    <a class="label label-primary" href="{{ path('posts_by_tag', { 'tag': tag.name }) }}">{{ tag.name }}</a>
+                {% endfor %}
+                </div>
+            </div>
+        </article>
+        <h3>Comments</h3>
+        <div class="comments-wrap">
+        {% for comment in post.0.comments %}
+            <div class="comment">
+                Rating: {{ comment.rating }}.<br>
+                Comment: {{ comment.content }}
+            </div><hr>
+        {% endfor %}
+        </div>
+        {{ form(formComment) }}
+    </div>
+{% endblock %}

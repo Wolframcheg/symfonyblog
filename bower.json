@@ -1,0 +1,24 @@
+{
+  "name": "symfonyblog",
+  "description": "geekhub-php",
+  "authors": [
+    "Pavel"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Wolframcheg/symfonyblog",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "adminlte#~2.3.2",
+    "font-awesome": "fontawesome#~4.5.0",
+    "bootstrap": "~3.3.6",
+    "jQCloud": "~1.0.3",
+    "infiniteajaxscroll": "http://infiniteajaxscroll.com/vendor/jquery-ias/dist/jquery-ias.min.js"
+  }
+}
