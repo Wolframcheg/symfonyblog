@@ -14,6 +14,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function findAllQuery()
     {
         return $this->createQueryBuilder('post')
+                ->orderBy('post.id', 'DESC')
                 ->getQuery();
     }
 
@@ -24,6 +25,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('post.tags', 'tag')
             ->andWhere('tag.name = :name')
             ->setParameter('name', $name)
+            ->orderBy('post.id', 'DESC')
             ->getQuery()
             ;
     }
@@ -37,6 +39,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->orWhere("post.pagetitle LIKE '%$query%'")
             ->orWhere("post.content LIKE '%$query%'")
             ->setParameter('q', $query)
+            ->orderBy('post.id', 'DESC')
             ->getQuery()
             ;
     }
@@ -56,4 +59,19 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getPopularPosts($limit)
+    {
+        return $this->createQueryBuilder('post')
+            ->select('post')
+            ->select('post, avg(comments.rating) as avg_rating')
+            ->groupBy('post')
+            ->Join('post.comments', 'comments')
+            ->orderBy('avg_rating', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

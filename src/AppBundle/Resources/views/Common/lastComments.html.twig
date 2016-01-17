@@ -1,0 +1,18 @@
+<div class="sidebar-widget">
+    <h3 class="sidebar-title">Last Comments</h3>
+    <div class="widget-container">
+        {% for comment in comments %}
+        <article class="widget-post">
+            <div class="post-body">
+                <a href="{{ path('show_post', { 'slug': comment.post.slug }) }}">
+                    <h2>{{ comment.content }}</h2>
+                    <div class="post-meta">
+                        <span><i class="fa fa-clock-o"></i> {{ comment.createdAt|date }}</span>
+                    </div>
+                </a>
+
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</div>

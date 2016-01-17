@@ -40,7 +40,7 @@
         {% if form.parent.vars.data.path starts with 'http' %}
             {% set urlImage = form.parent.vars.data.path %}
         {% else %}
-            {% set urlImage = 'uploads/postimages/' ~ form.parent.vars.data.id ~ '/' ~ form.parent.vars.data.path %}
+            {% set urlImage = form.parent.vars.data.path %}
         {% endif %}
 
         <img src="{{ asset(urlImage)}}" width="100px"/>
