@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class TagController extends Controller
@@ -17,20 +18,13 @@ class TagController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $tag = $request->get('tag');
+        $postManager = $this->container->get('app.post_manager');
+        $pagination = $postManager->getPostsByTag($request);
 
-        $limit = 5;
-
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('AppBundle:Post')->findByTagQuery($tag);
-
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            $limit/*limit per page*/
-        );
+        if ($request->isXmlHttpRequest()) {
+            $content = $this->renderView('AppBundle:Common:renderPostList.html.twig',['posts' => $pagination]);
+            return new Response($content);
+        }
 
         return ['posts' => $pagination];
     }
