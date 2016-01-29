@@ -13,7 +13,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
- * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(
  *     fields={"pagetitle"},
  *     message="This value must be unique!"
@@ -56,7 +55,6 @@ class Post
     /**
      * @var \DateTime $createdAt
      *
-     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -64,7 +62,6 @@ class Post
     /**
      * @var \DateTime $updatedAt
      *
-     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -360,61 +357,6 @@ class Post
         return $this->file;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        if (null !== $this->getFile()) {
-            $this->path = $this->getImageName() . '.' . $this->getFile()->guessExtension();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        if (null === $this->getFile()) {
-            return;
-        }
-
-        // check if we have an old image
-        if (isset($this->temp)) {
-            // delete the old image
-            unlink($this->temp);
-            // clear the temp image path
-            $this->temp = null;
-        }
-
-        $this->getFile()->move(
-            $this->getUploadRootDir() . '/' . $this->id,
-            $this->getImageName() . '.' . $this->getFile()->guessExtension()
-        );
-
-        $this->setFile(null);
-    }
-
-    /**
-     * @ORM\PreRemove()
-     */
-    public function storeFilenameForRemove()
-    {
-        $this->temp = $this->getAbsolutePath();
-    }
-
-//    /**
-//     * @ORM\PostRemove()
-//     */
-//    public function removeUpload()
-//    {
-//        if (isset($this->temp)) {
-//            unlink($this->temp);
-//        }
-//    }
-
     public function getAbsolutePath()
     {
         return null === $this->path
@@ -422,7 +364,7 @@ class Post
             : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
     }
 
-    protected function getUploadRootDir()
+    public function getUploadRootDir()
     {
         return __DIR__.'/../../../web/'.$this->getUploadDir();
     }
@@ -432,7 +374,7 @@ class Post
         return 'uploads/postimages';
     }
 
-    protected function getImageName()
+    public function getImageName()
     {
         return 'original';
     }
@@ -450,6 +392,21 @@ class Post
         return $this->path;
     }
 
+    public function setPath($path)
+    {
+        $this->path = $path;
+        return $this;
+    }
 
+    public function getTemp()
+    {
+        return $this->temp;
+    }
+
+    public function setTemp($temp)
+    {
+        $this->temp = $temp;
+        return $this;
+    }
 
 }
