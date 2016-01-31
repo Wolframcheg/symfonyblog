@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Comment
  *
  * @ORM\Table(name="comment")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository") *
  */
 class Comment
 {
@@ -33,17 +33,15 @@ class Comment
 
     /**
      * @var \DateTime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="update_at", type="datetime")
+     * @ORM\Column(type="datetime")
      */
-    private $updateAt;
+    private $updatedAt;
 
     /**
      * @var integer
@@ -124,27 +122,27 @@ class Comment
     }
 
     /**
-     * Set updateAt
+     * Set updatedAt
      *
-     * @param \DateTime $updateAt
+     * @param \DateTime $updatedAt
      *
      * @return Comment
      */
-    public function setUpdateAt($updateAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updateAt = $updateAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get updateAt
+     * Get updatedAt
      *
      * @return \DateTime
      */
-    public function getUpdateAt()
+    public function getUpdatedAt()
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
     /**
@@ -194,4 +192,17 @@ class Comment
     {
         return $this->post;
     }
+
+//    /**
+//     * @ORM\PrePersist()
+//     * @ORM\PreUpdate()
+//     */
+//    public function timestampable()
+//    {
+//        $now = new \DateTime();
+//        if (null === $this->getId()) {
+//            $this->createdAt = $now;
+//            $this->updateAt = $now;
+//        }else $this->updateAt = $now;
+//    }
 }
