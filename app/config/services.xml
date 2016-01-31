@@ -21,7 +21,7 @@
             <argument key="router" type="service" id="router"/>
         </service>
 
-        <service id="app.doctrine_subscriber" class="AppBundle\EventListener\DoctrineEventSubscriber">
+        <service id="app.doctrine_subscriber" class="AppBundle\EventSubscribers\DoctrineEventSubscriber">
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
 

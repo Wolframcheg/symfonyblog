@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\EventListener;
+namespace AppBundle\EventSubscribers;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Post;
