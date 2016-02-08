@@ -35,6 +35,8 @@
             </div><hr>
         {% endfor %}
         </div>
-        {{ form(formComment) }}
+        {% if app.user %}
+            {{ form(formComment) }}
+        {% endif %}
     </div>
 {% endblock %}
