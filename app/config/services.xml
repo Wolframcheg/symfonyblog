@@ -25,5 +25,9 @@
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
 
+        <service id="app.admin_user_provider" class="AppBundle\Services\AdminUserProvider">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+        </service>
+
     </services>
 </container>

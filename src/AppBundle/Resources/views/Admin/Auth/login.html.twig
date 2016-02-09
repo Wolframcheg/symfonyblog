@@ -7,7 +7,7 @@
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
         <div class="login-box-body">
-            <form action="{{ path('admin_login') }}" method="post">
+            <form action="{{ path('admin_login_check') }}" method="post">
                 <div class="form-group has-feedback">
                     <input type="name" class="form-control" id="username" name="_username" placeholder="Name" value="{{ last_username }}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

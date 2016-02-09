@@ -13,24 +13,41 @@ security:
         database_users:
             entity: { class: AppBundle:User, property: username }
 
+#        admin_user_provider:
+#            id: app.admin_user_provider
+
+
+
     # http://symfony.com/doc/current/book/security.html#firewalls-authentication
     firewalls:
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+#
+#        admin_area:
+#            pattern: /admin*
+#            anonymous: ~
+#            provider: admin_user_provider
+#            form_login:
+#                 login_path: admin_login
+#                 check_path: admin_login_check
+#            logout:
+#                 path: admin_logout
+#                 target: homepage
 
-        admin_area:
+        frontend_area:
             pattern: ~
             anonymous: ~
+            provider: database_users
             form_login:
-                 check_path: admin_login
-                 login_path: admin_login
+                login_path: login
+                check_path: login_check
+                username_parameter: "login[username]"
+                password_parameter: "login[password]"
             logout:
-                 path: admin_logout
-                 target: homepage
-            switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
-
+                path: logout
+                target: homepage
 
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findUserByNameAndRole($name ,$role)
+    {
+        return $this->createQueryBuilder('user')
+            ->andWhere('user.username = :name')
+            ->andWhere('user.roles LIKE :roles')
+            ->setParameter('name', $name)
+            ->setParameter('roles', '%"'.$role.'"%')
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 }

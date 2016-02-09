@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -10,11 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class AuthController extends Controller
 {
-    public function indexAction($name)
-    {
-        return $this->render('', array('name' => $name));
-    }
-
 
     /**
      * Displays a form to edit an existing Comment entity.
@@ -40,16 +36,4 @@ class AuthController extends Controller
     }
 
 
-    /**
-     * This is the route the user can use to logout.
-     *
-     * But, this will never be executed. Symfony will intercept this first
-     * and handle the logout automatically. See logout in app/config/security.yml
-     *
-     * @Route("/admin/logout", name="admin_logout")
-     */
-    public function logoutAction()
-    {
-        throw new \Exception('This should never be reached!');
-    }
 }
