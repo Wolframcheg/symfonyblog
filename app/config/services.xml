@@ -19,6 +19,7 @@
             <argument key="limit" type="string" >%limit_page%</argument>
             <argument key="formFactory" type="service" id="form.factory"/>
             <argument key="router" type="service" id="router"/>
+            <argument key="tokenStorage" type="service" id="security.token_storage"/>
         </service>
 
         <service id="app.doctrine_subscriber" class="AppBundle\EventSubscribers\DoctrineEventSubscriber">

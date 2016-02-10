@@ -30,8 +30,17 @@
         <div class="comments-wrap">
         {% for comment in post.0.comments %}
             <div class="comment">
+                {% if comment.user %}
+                Autor: {{ comment.user.username }}.<br>
+                {% endif %}
                 Rating: {{ comment.rating }}.<br>
                 Comment: {{ comment.content }}
+
+                {% if is_granted("edit", comment) %}
+                    <span class="glyphicon glyphicon-trash btn-link pull-right"
+                         data-action="{{ path('front_comment_delete', {id: comment.id}) }}"></span>
+                {% endif %}
+
             </div><hr>
         {% endfor %}
         </div>
@@ -39,4 +48,23 @@
             {{ form(formComment) }}
         {% endif %}
     </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('.glyphicon-trash').click(function(event){
+            var thisBut = this;
+            $.ajax({
+                url: $(this).data('action'),
+                type: 'DELETE',
+                success: function(response) {
+                    if(response.success == true){
+                        $(thisBut).parent().remove();
+                    };
+                }
+            })
+        });
+    </script>
 {% endblock %}

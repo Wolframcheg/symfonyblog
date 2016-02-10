@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -105,6 +106,12 @@ class Post
     private $comments;
 
     private $temp;
+
+    /**
+     *@ORM\ManyToOne(targetEntity="User", inversedBy="posts")
+     *@ORM\JoinColumn(name="owner_id", referencedColumnName="id", nullable=true)
+     */
+    private $owner;
 
     /**
      * Constructor
@@ -407,6 +414,29 @@ class Post
     {
         $this->temp = $temp;
         return $this;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param User $owner
+     * @return User
+     */
+    public function setOwner(User $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 
 }

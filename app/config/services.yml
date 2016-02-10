@@ -14,4 +14,14 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.security.role_hierarchy_checker:
+        class: AppBundle\Security\RoleHierarchyChecker
+        arguments: [@security.role_hierarchy]
 
+    app.comment_voter:
+        class: AppBundle\Security\CommentVoter
+        arguments: [@security.access.decision_manager, @app.security.role_hierarchy_checker]
+        tags:
+            - { name: security.voter }
+        # small performance boost
+        public: false

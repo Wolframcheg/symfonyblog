@@ -61,6 +61,12 @@ class Comment
      */
     private $post;
 
+    /**
+     *@ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     *@ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     */
+    protected $user;
+
 
 
     /**
@@ -192,6 +198,33 @@ class Comment
     {
         return $this->post;
     }
+
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     * @return User
+     *
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+
 
 //    /**
 //     * @ORM\PrePersist()
