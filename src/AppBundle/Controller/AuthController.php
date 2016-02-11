@@ -62,7 +62,7 @@ class AuthController extends Controller
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            $user->addRole(User::ROLE_USER);
+            $user->setRole(User::ROLE_USER);
 
             // 4) save the User!
             $em = $this->getDoctrine()->getManager();

@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * PostRepository
@@ -69,6 +70,18 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->Join('post.comments', 'comments')
             ->orderBy('avg_rating', 'DESC')
             ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findAllByOwner($userId)
+    {
+        return $this->createQueryBuilder('post')
+            ->select('post')
+            ->andWhere('post.owner = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('post.id', 'DESC')
             ->getQuery()
             ->getResult()
             ;

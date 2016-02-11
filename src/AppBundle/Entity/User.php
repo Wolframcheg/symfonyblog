@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,10 +17,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface
+class User implements AdvancedUserInterface
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_USER = 'ROLE_USER';
+    const ROLE_MANAGER = 'ROLE_MANAGER';
 
     /**
      * @ORM\Id
@@ -42,25 +44,29 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=64)     *
+     * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="string", length=64)
      */
-    private $roles = array();
+    private $role;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="owner")
      */
     private $posts;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
 
     /**
@@ -69,6 +75,7 @@ class User implements UserInterface
     private $comments;
 
     public function __construct() {
+        $this->isActive = true;
         $this->comments = new ArrayCollection();
         $this->posts = new ArrayCollection();
     }
@@ -114,19 +121,23 @@ class User implements UserInterface
         $this->password = $password;
     }
 
+
+    public function setRole($role){
+        $this->role = $role;
+        return $this;
+    }
+
+    public function getRole(){
+        return $this->role;
+    }
+
     /**
      * Returns the roles or permissions granted to the user for security.
      */
     public function getRoles()
     {
-        $roles = $this->roles;
+        return [$this->role];
 
-        // guarantees that a user always has at least one role for security
-        if (empty($roles)) {
-            $roles[] = 'ROLE_USER';
-        }
-
-        return array_unique($roles);
     }
 
     public function setRoles(array $roles)
@@ -143,18 +154,6 @@ class User implements UserInterface
     {
         $this->plainPassword = $password;
     }
-
-    /**
-     * @param $role
-     * @return $this
-     */
-    public function addRole($role)
-    {
-        if(!in_array($role, $this->roles))
-            $this->roles[] = $role;
-        return $this;
-    }
-
 
     /**
      * Add comment
@@ -247,5 +246,36 @@ class User implements UserInterface
         // if you had a plainPassword property, you'd nullify it here
         // $this->plainPassword = null;
     }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive($active)
+    {
+        return $this->isActive = $active;
+    }
+
 }
 

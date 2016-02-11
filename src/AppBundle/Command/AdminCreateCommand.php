@@ -49,7 +49,7 @@ class AdminCreateCommand extends ContainerAwareCommand
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($pass);
-        $user->addRole($role);
+        $user->setRole($role);
 
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $em->persist($user);

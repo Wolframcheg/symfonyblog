@@ -2,23 +2,22 @@
 
 namespace AppBundle\Security;
 
-use AppBundle\Entity\Comment;
+use AppBundle\Entity\Post;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class CommentVoter extends Voter
+class PostVoter extends Voter
 {
     const EDIT = 'edit';
 
     private $decisionManager;
     private $roleHierarchyChecker;
 
-    public function __construct(AccessDecisionManagerInterface $decisionManager, RoleHierarchyChecker $roleHierarchyChecker)
+    public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;
-        $this->roleHierarchyChecker = $roleHierarchyChecker;
     }
 
     protected function supports($attribute, $subject)
@@ -29,7 +28,7 @@ class CommentVoter extends Voter
         }
 
         // only vote on Post objects inside this voter
-        if (!$subject instanceof Comment) {
+        if (!$subject instanceof Post) {
             return false;
         }
 
@@ -51,28 +50,23 @@ class CommentVoter extends Voter
 
 
         // you know $subject is a Post object, thanks to supports
-        /** @var Comment $comment */
-        $comment = $subject;
+        /** @var post $post */
+        $post = $subject;
 
         switch($attribute) {
             case self::EDIT:
-                return $this->canEdit($comment, $user, $token);
+                return $this->canEdit($post, $user, $token);
         }
 
         throw new \LogicException('This code should not be reached!');
     }
 
 
-    private function canEdit(Comment $comment, UserInterface $user, TokenInterface $token)
+    private function canEdit(Post $post, UserInterface $user, TokenInterface $token)
     {
         if ($this->decisionManager->decide($token, ['ROLE_MANAGER']) &&
-            ( !$comment->getUser() || !$this->roleHierarchyChecker->check($comment->getUser(), 'ROLE_ADMIN') ) &&
-            $comment->getPost()->getOwner() == $user
+            $post->getOwner() == $user
         ) return true;
-
-
-        if($comment->getUser() === $user)
-            return true;
 
         return false;
     }

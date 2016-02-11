@@ -25,3 +25,11 @@ services:
             - { name: security.voter }
         # small performance boost
         public: false
+
+    app.post_voter:
+        class: AppBundle\Security\PostVoter
+        arguments: [@security.access.decision_manager]
+        tags:
+            - { name: security.voter }
+        # small performance boost
+        public: false

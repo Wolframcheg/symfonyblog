@@ -27,6 +27,9 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin_index') }}">Admin zone</a></li>
                         {% endif %}
+                        {% if is_granted('ROLE_MANAGER') %}
+                            <li><a href="{{ path('cabinet_index') }}">Cabinet</a></li>
+                        {% endif %}
 
                         {% if app.user %}
                             <li class="pull-right"><a href="{{ path('logout') }}">Log out</a></li>
