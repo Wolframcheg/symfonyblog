@@ -44,7 +44,7 @@ class PostController extends Controller
     /**
      * Creates a new Post entity.
      *
-     * @Route("/new", name="post_new")
+     * @Route("/new", name="admin_post_new")
      * @Method({"GET", "POST"})
      * @Template()
      */
@@ -52,7 +52,8 @@ class PostController extends Controller
     {
         $post = new Post();
         $user = $this->getUser();
-        $post->setOwner($user);
+        if($user)
+            $post->setOwner($user);
 
         $form = $this->createForm('AppBundle\Form\PostType', $post);
         $form->handleRequest($request);

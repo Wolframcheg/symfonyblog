@@ -2,13 +2,15 @@
 
 namespace AppBundle\Tests\Controller\Admin;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Tests\Controller\BaseControllerTest;
 
-class TagControllerTest extends WebTestCase
+
+class TagControllerTest extends BaseControllerTest
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
         $crawler = $client->request('GET', '/admin/tag');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -21,7 +23,8 @@ class TagControllerTest extends WebTestCase
 
     public function testNew()
     {
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
         $crawler = $client->request('GET', '/admin/tag/new');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -33,8 +36,8 @@ class TagControllerTest extends WebTestCase
 
     public function testEdit()
     {
-
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $id = $em
