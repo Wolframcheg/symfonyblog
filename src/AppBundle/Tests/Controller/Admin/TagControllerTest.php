@@ -2,10 +2,10 @@
 
 namespace AppBundle\Tests\Controller\Admin;
 
-use AppBundle\Tests\Controller\BaseControllerTest;
+use AppBundle\Tests\Controller\BaseTestController;
 
 
-class TagControllerTest extends BaseControllerTest
+class TagControllerTest extends BaseTestController
 {
     public function testIndex()
     {

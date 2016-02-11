@@ -2,10 +2,10 @@
 
 namespace AppBundle\Tests\Controller\Admin;
 
-use AppBundle\Tests\Controller\BaseControllerTest;
+use AppBundle\Tests\Controller\BaseTestController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class CommentControllerTest extends BaseControllerTest
+class CommentControllerTest extends BaseTestController
 {
     public function testIndex()
     {

@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class BaseControllerTest extends WebTestCase
+class BaseTestController extends WebTestCase
 {
     protected $client = null;
 

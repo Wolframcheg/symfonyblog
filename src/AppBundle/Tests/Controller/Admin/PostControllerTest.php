@@ -2,10 +2,10 @@
 
 namespace AppBundle\Tests\Controller\Admin;
 
-use AppBundle\Tests\Controller\BaseControllerTest;
+use AppBundle\Tests\Controller\BaseTestController;
 
 
-class PostControllerTest extends BaseControllerTest
+class PostControllerTest extends BaseTestController
 {
     public function testIndex()
     {
