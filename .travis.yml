@@ -16,6 +16,7 @@ before_script:
 script:
   - app/console doctrine:schema:update --force
   - app/console hautelook_alice:doctrine:fixtures:load --append
+  - app/console app:admin_create admin admin@admin.net admin
   - phpunit -c app/ --coverage-clover=coverage.clover
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

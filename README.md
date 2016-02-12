@@ -10,6 +10,12 @@ For install go to root project and run
 sh reload.sh
 ```
 
+Create admin user
+```
+app/console app:admin_create admin admin@ukr.net admin
+
+```
+
 [Demo](http://sblog.kuzserv.ru/)
 
 [Demo admin zone](http://sblog.kuzserv.ru/admin)

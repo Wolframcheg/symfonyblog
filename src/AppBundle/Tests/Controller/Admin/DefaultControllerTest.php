@@ -2,13 +2,16 @@
 
 namespace AppBundle\Tests\Controller\Admin;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Tests\Controller\BaseTestController;
 
-class DefaultControllerTest extends WebTestCase
+
+class DefaultControllerTest extends BaseTestController
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
+
         $crawler = $client->request('GET', '/admin');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

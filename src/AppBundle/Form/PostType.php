@@ -24,7 +24,9 @@ class PostType extends AbstractType
 
         $builder
             ->add('pagetitle',TextType::class)
-            ->add('content',TextareaType::class)
+            ->add('content',TextareaType::class,[
+                'attr' => ['cols' => '5', 'rows' => '5'],
+            ])
             ->add('file', FileType::class,[
                 'required' => false,
                 'data_class' => null,

@@ -2,13 +2,15 @@
 
 namespace AppBundle\Tests\Controller\Admin;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Tests\Controller\BaseTestController;
 
-class PostControllerTest extends WebTestCase
+
+class PostControllerTest extends BaseTestController
 {
     public function testIndex()
     {
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
         $crawler = $client->request('GET', '/admin/post');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -21,10 +23,12 @@ class PostControllerTest extends WebTestCase
 
     public function testNew()
     {
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
         $crawler = $client->request('GET', '/admin/post/new');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $this->assertEquals(
             1,
             $crawler->filter('h1')->count()
@@ -33,8 +37,8 @@ class PostControllerTest extends WebTestCase
 
     public function testEdit()
     {
-
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $id = $em

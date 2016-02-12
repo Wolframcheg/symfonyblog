@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PostManager{
 
@@ -20,12 +21,14 @@ class PostManager{
     protected $limit;
     protected $formFactory;
     protected $router;
+    protected $tokenStorage;
 
     public function __construct(RegistryInterface $doctrine,
                                 PaginatorInterface $knpPaginator,
                                 $limit = 10,
                                 FormFactoryInterface $formFactory,
-                                RouterInterface $router
+                                RouterInterface $router,
+                                TokenStorageInterface $tokenStorage
     )
     {
         $this->doctrine = $doctrine;
@@ -33,6 +36,7 @@ class PostManager{
         $this->limit = $limit;
         $this->formFactory = $formFactory;
         $this->router = $router;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function getPostsByTag(Request $request)
@@ -87,12 +91,14 @@ class PostManager{
     {
         $em = $this->doctrine->getManager();
         $post = $em->getRepository('AppBundle:Post')->findBySlug($slug);
+        $user = $this->getUser();
 
         if($post[0] === null)
             throw  new NotFoundHttpException('Post not found');
 
         $comment = new Comment();
         $comment->setPost($post[0]);
+        $comment->setUser($user);
 
         $form = $this->formFactory->create(CommentType::class, $comment, [
             'method' => Request::METHOD_POST,
@@ -104,7 +110,7 @@ class PostManager{
                 'attr' => array('class' => "btn btn-primary")
             ));
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'POST' && $user) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($comment);
@@ -116,5 +122,22 @@ class PostManager{
 
         return ['post' => $post, 'formComment' => $form->createView()];
     }
+
+
+    protected function getUser()
+    {
+        if (null === $token = $this->tokenStorage->getToken()) {
+            return;
+        }
+
+        if (!is_object($user = $token->getUser())) {
+            // e.g. anonymous authentication
+            return;
+        }
+
+        return $user;
+    }
+
+
 
 }

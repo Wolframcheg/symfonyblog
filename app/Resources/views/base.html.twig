@@ -9,6 +9,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body style="padding-top: 100px;">
+    {% block body_all %}
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -20,10 +21,26 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="{{ url('homepage') }}">Home</a></li>
+                <div id="navbar" class="collapse navbar-collapse row">
+                    <ul class="nav navbar-nav col-sm-9">
+                        <li><a href="{{ url('homepage') }}">Home</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ path('admin_index') }}">Admin zone</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_MANAGER') %}
+                            <li><a href="{{ path('cabinet_index') }}">Cabinet</a></li>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <li class="pull-right"><a href="{{ path('logout') }}">Log out</a></li>
+                            <li class="pull-right"><span>{{ app.user.username }}</span></li>
+                        {% else %}
+                            <li class="pull-right"><a href="{{ path('registration') }}">Register</a></li>
+                            <li class="pull-right"><a href="{{ path('login') }}">Log in</a></li>
+                        {% endif %}
                     </ul>
+
+
                     <div class="col-sm-3 col-md-3 pull-right">
                         <form class="navbar-form" role="search" method="GET" action="{{ path('search') }}">
                             <div class="input-group">
@@ -63,5 +80,6 @@
                 $('#tag_cloud').jQCloud(words);
             </script>
         {% endblock %}
+    {% endblock %}
     </body>
 </html>

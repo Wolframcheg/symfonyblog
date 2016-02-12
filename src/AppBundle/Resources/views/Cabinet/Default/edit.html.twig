@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="col-md-8">
+        <h1>{% block title %}Edit Post{% endblock %}</h1>
+
+    <section class="content">
+        <p>
+            <a href="{{ path('cabinet_index') }}" class="btn btn-primary">Back to the cabinet</a>
+        </p>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Fill form</h3>
+            </div>
+
+            {{ form_start(edit_form) }}
+            <div class="box-body">
+                {{ form_widget(edit_form) }}
+            </div>
+            <div class="box-footer">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+            {{ form_end(edit_form) }}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% form_theme edit_form _self %}
+
+{% block file_widget %}
+    {{ block('form_widget') }}
+    <br>
+    {% if form.parent.vars.data.path %}
+
+        {% if form.parent.vars.data.path starts with 'http' %}
+            {% set urlImage = form.parent.vars.data.path %}
+        {% else %}
+            {% set urlImage = form.parent.vars.data.path %}
+        {% endif %}
+
+        <img src="{{ asset(urlImage)}}" width="100px"/>
+    {% endif %}
+{% endblock %}

@@ -385,3 +385,25 @@ footer .footer-bottom {
 	padding: 10px 0 40px;
 }
 }
+
+.navbar-nav>li>span,
+.navbar-nav>li>a {
+	color: #fff;
+}
+.navbar-nav>li>span{
+	position: relative;
+	display: block;
+	padding: 10px 15px;
+	line-height: 20px;
+}
+@media (min-width: 768px) {
+	.navbar-nav>li>span {
+		padding-top: 15px;
+		padding-bottom: 15px
+	}
+}
+@media (max-width: 768px) {
+	.navbar-nav>li.pull-right {
+		float: none !important;
+	}
+}

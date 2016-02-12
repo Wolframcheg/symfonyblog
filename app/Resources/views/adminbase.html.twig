@@ -8,7 +8,7 @@
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
-<body class="skin-blue sidebar-mini">
+<body class="{% block bodystyle %}skin-blue sidebar-mini{% endblock %}">
 {% block body %}
     <div class="wrapper">
         <header class="main-header">
@@ -32,9 +32,10 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {#<img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">#}
-                                <span class="hidden-xs">Hello, <b>Admin</b></span>
+                                <span class="hidden-xs">Hello, <b>{{ app.user.username }}</b>
+                                </span>
                             </a>
-                            {#<ul class="dropdown-menu">#}
+                            <ul class="dropdown-menu">
                                 {#<!-- User image -->#}
                                 {#<li class="user-header">#}
                                     {#<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">#}
@@ -59,16 +60,16 @@
                                     {#</div>#}
                                     {#<!-- /.row -->#}
                                 {#</li>#}
-                                {#<!-- Menu Footer-->#}
-                                {#<li class="user-footer">#}
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
                                     {#<div class="pull-left">#}
                                         {#<a href="#" class="btn btn-default btn-flat">Profile</a>#}
                                     {#</div>#}
-                                    {#<div class="pull-right">#}
-                                        {#<a href="#" class="btn btn-default btn-flat">Sign out</a>#}
-                                    {#</div>#}
-                                {#</li>#}
-                            {#</ul>#}
+                                    <div class="pull-right">
+                                        <a href="{{ path('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -94,6 +95,11 @@
                     <li>
                         <a href="{{ url('admin_comment_index') }}">
                             <i class="fa fa-comment"></i> <span>Comments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('admin_user_index') }}">
+                            <i class="fa fa-user"></i> <span>Users</span>
                         </a>
                     </li>
                 </ul>

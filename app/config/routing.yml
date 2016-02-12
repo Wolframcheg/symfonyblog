@@ -4,3 +4,15 @@ app:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+logout:
+    path: /logout
+
+login_check:
+    path: /login_check
+
+#admin_logout:
+#    path: /admin/logout
+#
+#admin_login_check:
+#    path: /admin/login_check

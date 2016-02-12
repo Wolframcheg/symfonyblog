@@ -1,0 +1,31 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+        <h1>{% block title %}Edit User{% endblock %}</h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url('admin_index') }}"><i class="fa fa-dashboard"></i> Home admin</a></li>
+            <li><a href="{{ url('admin_user_index') }}">User list</a></li>
+            <li class="active">Edit User</li>
+        </ol>
+    </section>
+    <section class="content">
+        <p>
+            <a href="{{ path('admin_user_index') }}" class="btn btn-primary">Back to the list</a>
+        </p>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Fill form</h3>
+            </div>
+
+            {{ form_start(edit_form) }}
+            <div class="box-body">
+                {{ form_widget(edit_form) }}
+            </div>
+            <div class="box-footer">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+            {{ form_end(edit_form) }}
+        </div>
+    </section>
+{% endblock %}

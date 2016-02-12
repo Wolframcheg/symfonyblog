@@ -2,13 +2,17 @@
 
 namespace AppBundle\Tests\Controller\Admin;
 
+use AppBundle\Tests\Controller\BaseTestController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class CommentControllerTest extends WebTestCase
+class CommentControllerTest extends BaseTestController
 {
     public function testIndex()
     {
-        $client = static::createClient();
+
+        $this->logIn();
+        $client = $this->client;
+
         $crawler = $client->request('GET', '/admin/comment');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -20,8 +24,8 @@ class CommentControllerTest extends WebTestCase
 
     public function testEdit()
     {
-
-        $client = static::createClient();
+        $this->logIn();
+        $client = $this->client;
 
         $em = $client->getContainer()->get('doctrine.orm.entity_manager');
         $id = $em
