@@ -16,7 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 class BlogController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{_locale}", name="homepage", defaults={"_locale": "en"}, requirements={
+     *     "_locale": "%locales.variants%"
+     * }
+     * )
      * @Template()
      */
     public function indexAction(Request $request)
@@ -33,7 +36,9 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/search", name="search")
+     * @Route("/{_locale}/search", name="search", defaults={"_locale": "en"}, requirements={
+     *     "_locale": "%locales.variants%"
+     * })
      * @Method("GET")
      * @Template()
      */
@@ -51,7 +56,8 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/post/{slug}", name="show_post", requirements={"slug" = "[a-zA-Z1-9\-_\/]+"},)
+     * @Route("/{_locale}/post/{slug}", name="show_post", requirements={"slug" = "[a-zA-Z1-9\-_\/]+",
+     *     "_locale": "%locales.variants%"}, defaults={"_locale": "en"})
      * @Template()
      */
     public function showAction(Request $request, $slug)

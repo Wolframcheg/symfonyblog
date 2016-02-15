@@ -15,9 +15,9 @@
 
             <div class="blog-post-body">
                 <h2><a href="{{ path('show_post', { 'slug': post.slug }) }}">{{ post.pagetitle  }}</a></h2>
-                <div class="post-meta"><i class="fa fa-clock-o"></i>{{ post.createdAt|date }}</div>
+                <div class="post-meta"><i class="fa fa-clock-o"></i>{{ post.createdAt|localizeddate }}</div>
                 <p>{{ post.content  }}</p>
-                <div class="read-more"><a href="{{ path('show_post', { 'slug': post.slug }) }}">Continue Reading</a></div>
+                <div class="read-more"><a href="{{ path('show_post', { 'slug': post.slug }) }}">{{ 'Continue Reading'|trans }}</a></div>
             </div>
         </article>
     {% endfor %}

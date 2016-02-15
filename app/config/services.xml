@@ -30,5 +30,13 @@
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
         </service>
 
+        <service id="app.security.role_hierarchy_checker" class="AppBundle\Security\RoleHierarchyChecker">
+            <argument type="service" id="security.role_hierarchy"/>
+        </service>
+
+        <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
+            <tag name="twig.extension"/>
+        </service>
+
     </services>
 </container>

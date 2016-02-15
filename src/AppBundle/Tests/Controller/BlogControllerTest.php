@@ -23,7 +23,7 @@ class BlogControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', "/search?q=sometext");
+        $crawler = $client->request('GET', "/en/search?q=sometext");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(
             1,
@@ -40,7 +40,7 @@ class BlogControllerTest extends WebTestCase
             ->getRepository('AppBundle:Post')
             ->findOneBy([])->getSlug();
 
-        $crawler = $client->request('GET', "/post/{$slug}");
+        $crawler = $client->request('GET', "/en/post/{$slug}");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(
             1,
