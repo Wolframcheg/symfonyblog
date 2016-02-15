@@ -407,3 +407,7 @@ footer .footer-bottom {
 		float: none !important;
 	}
 }
+
+.lang-menu li a{
+	color: white;
+}

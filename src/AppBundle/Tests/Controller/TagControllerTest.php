@@ -15,7 +15,7 @@ class TagControllerTest extends WebTestCase
             ->getRepository('AppBundle:Tag')
             ->findOneBy([])->getName();
 
-        $crawler = $client->request('GET', "/tag?tag={$name}");
+        $crawler = $client->request('GET', "/en/tag?tag={$name}");
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(
             1,

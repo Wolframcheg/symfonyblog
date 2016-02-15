@@ -22,35 +22,47 @@
                     </button>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse row">
-                    <ul class="nav navbar-nav col-sm-9">
-                        <li><a href="{{ url('homepage') }}">Home</a></li>
+                    <ul class="nav navbar-nav col-sm-8">
+                        <li><a href="{{ url('homepage') }}">{{ 'Home'|trans }}</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('admin_index') }}">Admin zone</a></li>
+                            <li><a href="{{ path('admin_index') }}">{{ 'Admin zone'|trans }}</a></li>
                         {% endif %}
                         {% if is_granted('ROLE_MANAGER') %}
-                            <li><a href="{{ path('cabinet_index') }}">Cabinet</a></li>
+                            <li><a href="{{ path('cabinet_index') }}">{{ 'Cabinet'|trans }}</a></li>
                         {% endif %}
 
                         {% if app.user %}
-                            <li class="pull-right"><a href="{{ path('logout') }}">Log out</a></li>
+                            <li class="pull-right"><a href="{{ path('logout') }}">{{ 'Log out'|trans }}</a></li>
                             <li class="pull-right"><span>{{ app.user.username }}</span></li>
                         {% else %}
-                            <li class="pull-right"><a href="{{ path('registration') }}">Register</a></li>
-                            <li class="pull-right"><a href="{{ path('login') }}">Log in</a></li>
+                            <li class="pull-right"><a href="{{ path('registration') }}">{{ 'Register'|trans }}</a></li>
+                            <li class="pull-right"><a href="{{ path('login') }}">{{ 'Log in'|trans }}</a></li>
                         {% endif %}
                     </ul>
 
 
-                    <div class="col-sm-3 col-md-3 pull-right">
-                        <form class="navbar-form" role="search" method="GET" action="{{ path('search') }}">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" name="q" id="srch-term">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                </div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <form class="navbar-form" role="search" method="GET" action="{{ path('search') }}">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="{{ 'Search'|trans }}" name="q" id="srch-term">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                            <div class="col-sm-2">
+                                <ul class="lang-menu list-inline">
+                                    <li><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'ru'})) }}">ru</a></li>
+                                    <li><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">en</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
                 <!--/.nav-collapse -->
             </div>

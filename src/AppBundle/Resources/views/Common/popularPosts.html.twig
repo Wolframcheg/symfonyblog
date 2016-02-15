@@ -1,5 +1,5 @@
 <div class="sidebar-widget">
-    <h3 class="sidebar-title">Popular posts</h3>
+    <h3 class="sidebar-title">{{ 'Popular posts'|trans }}</h3>
     <div class="widget-container">
         {% for post in posts %}
             {% if post.0.path %}
@@ -16,7 +16,7 @@
                 <div class="post-body">
                     <h2><a href="{{ path('show_post', { 'slug': post.0.slug }) }}">{{ post.0.pagetitle  }}</a></h2>
                     <div class="post-meta">
-                        <span><i class="fa fa-clock-o"></i> {{ post.0.createdAt|date }}</span>
+                        <span><i class="fa fa-clock-o"></i> {{ post.0.createdAt|localizeddate }}</span>
                         <span><i class="fa fa-star"></i> {{ post.avg_rating|round(1, 'floor') }}</span>
                     </div>
                 </div>

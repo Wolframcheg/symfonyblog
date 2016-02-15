@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>{% block title %}Posts by tag "{{ app.request.get('tag') }}"{% endblock %}</h1>
+    <h1>{% block title %}{{ 'Posts by tag'|trans }} "{{ app.request.get('tag') }}"{% endblock %}</h1>
     {% include 'AppBundle:Common:renderPostList.html.twig' %}
 {% endblock %}
 

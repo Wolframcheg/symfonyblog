@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 class TagController extends Controller
 {
     /**
-     * @Route("/tag", name="posts_by_tag")
+     * @Route("/{_locale}/tag", name="posts_by_tag", defaults={"_locale": "en"}, requirements={
+     *     "_locale": "%locales.variants%"
+     * })
      * @Method("GET")
      * @Template()
      */
